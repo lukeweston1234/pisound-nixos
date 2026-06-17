@@ -59,6 +59,7 @@
     libraspberrypi
     raspberrypi-eeprom
     alsa-utils
+    jack2
   ];
 
   security.rtkit.enable = true;
@@ -69,12 +70,19 @@
 
   services.pulseaudio.enable = false;
 
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    jack.enable = true;
-  };
+  services.pipewire.enable = false;
+
+  environment.etc."asound.conf".text = ''
+    defaults.pcm.card pisound
+    defaults.ctl.card pisound
+  '';
+
+  # services.pipewire = {
+  #   enable = true;
+  #   alsa.enable = true;
+  #   alsa.support32Bit = true;
+  #   jack.enable = true;
+  # };
 
   users.users.luke = {
     isNormalUser = true;
