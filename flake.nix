@@ -37,17 +37,6 @@
           RUSTFLAGS = pkgs.lib.optionalString pkgs.stdenv.isx86_64
             "-C target-cpu=x86-64-v3";
         };
-
-     graphContent = '''
-        audio {
-          sine { freq: 440.0 },
-          mono_fan_out { chans: 2 }
-        }
-
-        sine >> mono_fan_out
-
-        { mono_fan_out }
-      '';
     in
     {
       packages = forAll (system: {
@@ -76,14 +65,19 @@
               (_: _: { legato-app = self.packages.aarch64-linux.default; })
           ]; }
           ({pkgs, ...}: {
-            # TODO: Something more eloquent here. For now just copying in via tmpfiles
+            systemd.services.legato = 
+              let graphFile = pkgs.writeText ".legato" ''
+                audio {
+                  sine { freq: 440.0 },
+                  mono_fan_out { chans: 2 }
+                }
 
-            systemd.tmpfiles.rules = [
-              "d /run/legato 0755 luke luke -"
-              "C /run/legato/.legato 0644 luke luke - ${graphContent}"
-            ];
+                sine >> mono_fan_out
 
-            systemd.services.legato = {
+                { mono_fan_out }
+              ''; 
+                in      
+              {
               description = "Legato DSP (CPAL/ALSA)";
               wantedBy = [ "multi-user.target" ];
               after = [ "sound.target" ];
@@ -91,7 +85,7 @@
                 LEGATO_SAMPLE_RATE = "48000";
                 LEGATO_BLOCK_SIZE = "1024";
                 LEGATO_CHANNELS = "2";
-                LEGATO_GRAPH = "/var/run/legato/.legato";
+                LEGATO_GRAPH = "${graphFile}";
               };
               serviceConfig = {
                 User = "luke";
