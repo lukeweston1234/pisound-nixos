@@ -23,7 +23,8 @@ fn main() {
     let ports = PortBuilder::default().audio_out(config.channels).build();
     let (app, _) = LegatoBuilder::<Unconfigured>::new(config, ports).build_dsl(&graph);
 
-    let host = cpal::default_host();
+    let host = cpal::host_from_id(cpal::HostId::Jack).unwrap();
+
     AudioInterface::builder(&host, config)
         .build(app)
         .expect("Failed to start audio")

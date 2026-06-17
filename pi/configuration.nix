@@ -58,6 +58,7 @@
   environment.systemPackages = with pkgs; [
     libraspberrypi
     raspberrypi-eeprom
+    alsa-utils
   ];
 
   security.rtkit.enable = true;

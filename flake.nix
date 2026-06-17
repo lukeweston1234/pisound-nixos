@@ -37,6 +37,17 @@
           RUSTFLAGS = pkgs.lib.optionalString pkgs.stdenv.isx86_64
             "-C target-cpu=x86-64-v3";
         };
+
+     graphContent = '''
+        audio {
+          sine { freq: 440.0 },
+          mono_fan_out { chans: 2 }
+        }
+
+        sine >> mono_fan_out
+
+        { mono_fan_out }
+      '';
     in
     {
       packages = forAll (system: {
@@ -68,16 +79,8 @@
             # TODO: Something more eloquent here. For now just copying in via tmpfiles
 
             systemd.tmpfiles.rules = [
-              "C /run/legato/.legato 0644 luke luke - ${pkgs.writeText "legato-graph" ''
-                audio {
-                  sine { freq: 440.0 },
-                  mono_fan_out { chans: 2 }
-                }
-
-                sine >> mono_fan_out
-
-                { mono_fan_out }
-              ''}"
+              "d /run/legato 0755 luke luke -"
+              "C /run/legato/.legato 0644 luke luke - ${graphContent}"
             ];
 
             systemd.services.legato = {
