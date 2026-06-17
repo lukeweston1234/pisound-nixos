@@ -6,7 +6,10 @@
 
   boot.supportedFilesystems = lib.mkForce [ "ext4" "vfat" ];
 
+  boot.kernelModules = [ "snd-soc-pisound" ];
+
   boot.initrd = {
+
     availableKernelModules = {
       "xhci_pci" = true;
       "usbhid" = true;
@@ -39,8 +42,20 @@
     deviceTree = {
       enable = true;
       filter = "*rpi-4-*.dtb";
+      overlays = [
+        {
+          name = "pisound";
+          dtboFile = "${config.boot.kernelPackages.kernel}/dtbs/overlays/pisound.dtbo";
+        }
+        { 
+          name = "disable-bt"; 
+          dtboFile = ./disable-bt.dtbo; 
+        }
+      ];
     };
   };
+
+  sound.enable = true;
 
   environment.systemPackages = with pkgs; [
     libraspberrypi
@@ -54,11 +69,11 @@
   ];
 
   services.pulseaudio.enable = false;
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
-    pulse.enable = true;
     jack.enable = true;
   };
 
@@ -70,8 +85,6 @@
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDWvvcvKsuBIm9Cawq4Ay+W10KKd/NgCrOmpBZjnE/5D816Odyrtd/jGh7zhcjqaLOEy8WE+I/7Yx6aNovclSRaAEpNli5wq5DZFCIy9/zMn9D5Hbh0FDLtsu8ucopixJwlDDKAT50NMgfd3H8EEYx1NY3jTm3SyBHXhp6asPcLGAUTmaG789GSUKDyyDV1tq6nyDgIXhj9npJTBGJ6HvT5mHLJQg1NpflLibMtbapf4z+IYJINMWPX3KgLWsIS476QYodIdRKd0Ylc3fJPTanXlZjlDrMDKCaotyUekC2mFMDVbJVn7kJ5sAc/Bc+KyWfdy1NEpKpB+G2jCnCZEVz4vpuv1qT8Ke+WXeZPc2q2PNs5hyylNkbWQhvCvn5WfSyxSAUg78VqO/BrLJyCLSXLurVHdWJG+x1XdRPxZjTijVtSmhIp0PJ0g34a2BOIqfqCVlRHOKmCGMFIoD/Z+pPZeOzJx9YYBN/9+8RQGYaYPPnbkkpmjwNTju7UoUwZT3M= luke@nixos"
     ];
   };
-
-
 
   systemd.services.legato = {
     description = "Legato DSP (CPAL/ALSA)";
