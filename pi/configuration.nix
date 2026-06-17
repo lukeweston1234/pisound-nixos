@@ -73,7 +73,7 @@
       LEGATO_GRAPH = "/etc/legato/graph.legato";
     };
     serviceConfig = {
-      User = "legato";
+      User = "luke";
       ExecStart = "${pkgs.legato-app}/bin/legato-template";
       LimitRTPRIO = 99;
       LimitMEMLOCK = "infinity";
@@ -83,6 +83,7 @@
   };
 
   networking.networkmanager.enable = true;
+  networking.useDHCP = lib.mkDefault true;
 
   time.timeZone = "Europe/Berlin";
 
