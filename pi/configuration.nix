@@ -84,26 +84,6 @@
     ];
   };
 
-  systemd.services.legato = {
-    description = "Legato DSP (CPAL/ALSA)";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "sound.target" ];
-    environment = {
-      LEGATO_SAMPLE_RATE = "48000";
-      LEGATO_BLOCK_SIZE = "1024";
-      LEGATO_CHANNELS = "2";
-      LEGATO_GRAPH = "/var/run/legato/.legato";
-    };
-    serviceConfig = {
-      User = "luke";
-      ExecStart = "${pkgs.legato-app}/bin/legato-template";
-      LimitRTPRIO = 99;
-      LimitMEMLOCK = "infinity";
-      Restart = "on-failure";
-      RestartSec = 2;
-    };
-  };
-
   networking.networkmanager.enable = true;
   networking.useDHCP = lib.mkDefault true;
 
