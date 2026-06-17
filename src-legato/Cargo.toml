@@ -1,0 +1,10 @@
+[package]
+name = "legato-template"
+version = "0.1.0"
+license = "AGPL-3.0"
+edition = "2024"
+
+[dependencies]
+cpal = "0.16.0"
+legato = "0.0.27"
+rtrb = "0.3.3"
