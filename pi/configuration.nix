@@ -26,8 +26,6 @@
     };
   };
 
-  powerManagement.cpuFreqGovernor = "performance";
-
   services.openssh.enable = true;
 
   systemd.services.sshd.wantedBy = pkgs.lib.mkForce [ "multi-user.target" ];
