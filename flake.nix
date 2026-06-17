@@ -65,6 +65,21 @@
               (_: _: { legato-app = self.packages.aarch64-linux.default; })
           ]; }
           ({pkgs, ...}: {
+            # TODO: Something more eloquent here. For now just copying in via tmpfiles
+
+            systemd.tmpfiles.rules = [
+              "C /run/legato/.legato 0644 luke luke - ${pkgs.writeText "legato-graph" ''
+                audio {
+                  sine { freq: 440.0 },
+                  mono_fan_out { chans: 2 }
+                }
+
+                sine >> mono_fan_out
+
+                { mono_fan_out }
+              ''}"
+            ];
+
             systemd.services.legato = {
               description = "Legato DSP (CPAL/ALSA)";
               wantedBy = [ "multi-user.target" ];
