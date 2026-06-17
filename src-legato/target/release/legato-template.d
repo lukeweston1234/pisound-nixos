@@ -1,1 +1,0 @@
-/home/luke/Documents/personal/pisound-raspberry-pi-flake/src-legato/target/release/legato-template: /home/luke/Documents/personal/pisound-raspberry-pi-flake/src-legato/src/../../.legato /home/luke/Documents/personal/pisound-raspberry-pi-flake/src-legato/src/main.rs
