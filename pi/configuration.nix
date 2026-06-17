@@ -47,9 +47,9 @@
           name = "pisound";
           dtboFile = "${config.boot.kernelPackages.kernel}/dtbs/overlays/pisound.dtbo";
         }
-        { 
-          name = "disable-bt"; 
-          dtboFile = ./disable-bt.dtbo; 
+        {
+          name = "disable-bt";
+          dtboFile = "${config.boot.kernelPackages.kernel}/dtbs/overlays/disable-bt.dtbo";
         }
       ];
     };
