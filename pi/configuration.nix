@@ -53,6 +53,15 @@
     { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
   ];
 
+  services.pulseaudio.enable = false;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
+
   users.users.luke = {
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" ];
@@ -62,6 +71,8 @@
     ];
   };
 
+
+
   systemd.services.legato = {
     description = "Legato DSP (CPAL/ALSA)";
     wantedBy = [ "multi-user.target" ];
@@ -70,7 +81,7 @@
       LEGATO_SAMPLE_RATE = "48000";
       LEGATO_BLOCK_SIZE = "1024";
       LEGATO_CHANNELS = "2";
-      LEGATO_GRAPH = "/etc/legato/graph.legato";
+      LEGATO_GRAPH = "/var/run/legato/.legato";
     };
     serviceConfig = {
       User = "luke";

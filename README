@@ -2,5 +2,5 @@
 nix build .#nixosConfigurations.pi.config.system.build.sdImage
 
 zstd -dc result/sd-image/nixos-image-sd-card-26.11.20260610.9ae611a-aarch64-linux.img.zst | 
-dd of=/dev/sdX bs=4M conv=fsync status=progress
+sudo dd of=/dev/sdX bs=4M conv=fsync status=progress
 ```
