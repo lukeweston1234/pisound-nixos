@@ -72,9 +72,9 @@
 
   services.pipewire.enable = false;
 
-  environment.etc."asound.conf".text = ''
-    defaults.pcm.card pisound
-    defaults.ctl.card pisound
+  # https://nixos.wiki/wiki/ALSA
+  boot.extraModprobeConfig = ''
+    options snd slots=snd-soc-pisound
   '';
 
   # services.pipewire = {
