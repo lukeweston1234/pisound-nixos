@@ -9,11 +9,23 @@
   boot.kernelModules = [ "snd-soc-pisound" ];
 
   boot.initrd = {
-    availableKernelModules = [
-      "xhci_pci"
-      "usbhid"
-      "usb_storage"
-    ];
+    availableKernelModules = {
+      "xhci_pci" = true;
+      "usbhid" = true;
+      "usb_storage" = true;
+      # todo: remove this when this is fixed: https://github.com/NixOS/nixpkgs/issues/154163
+      # related: https://github.com/NixOS/nixpkgs/issues/109280
+      # related: https://discourse.nixos.org/t/cannot-build-raspberry-pi-sdimage-module-dw-hdmi-not-found/71804
+      dw-hdmi = lib.mkForce false;
+      dw-mipi-dsi = lib.mkForce false;
+      rockchipdrm = lib.mkForce false;
+      rockchip-rga = lib.mkForce false;
+      phy-rockchip-pcie = lib.mkForce false;
+      pcie-rockchip-host = lib.mkForce false;
+      pwm-sun4i = lib.mkForce false;
+      sun4i-drm = lib.mkForce false;
+      sun8i-mixer = lib.mkForce false;
+    };
   };
 
   services.openssh.enable = true;
