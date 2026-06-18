@@ -15,7 +15,7 @@ fn main() {
 
     let config = Config {
         sample_rate: env_or("LEGATO_SAMPLE_RATE", 48_000),
-        block_size: env_or("LEGATO_BLOCK_SIZE", 1024),
+        block_size: env_or("LEGATO_BLOCK_SIZE", 256),
         channels: env_or("LEGATO_CHANNELS", 2),
         rt_capacity: env_or("LEGATO_RT_CAPACITY", 0),
     };
