@@ -83,7 +83,7 @@
               after = [ "sound.target" ];
               environment = {
                 LEGATO_SAMPLE_RATE = "48000";
-                LEGATO_BLOCK_SIZE = "1024";
+                LEGATO_BLOCK_SIZE = "256";
                 LEGATO_CHANNELS = "2";
                 LEGATO_GRAPH = "${graphFile}";
               };
