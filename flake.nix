@@ -30,12 +30,15 @@
             (with pkgs; [ alsa-lib jack2 udev dbus ]);
         in
         craneLib.buildPackage {
-          src = craneLib.cleanCargoSource ./src-legato;
+          src = craneLib.cleanCargoSource ./.;
+
           strictDeps = true;
-          nativeBuildInputs = with pkgs; [ pkg-config clang];
+          nativeBuildInputs = with pkgs; [ pkg-config clang ];
           buildInputs = rtDeps;
-          RUSTFLAGS = pkgs.lib.optionalString pkgs.stdenv.isx86_64
-            "-C target-cpu=x86-64-v3";
+          RUSTFLAGS = pkgs.lib.optionalString pkgs.stdenv.isx86_64 "-C target-cpu=x86-64-v3";
+
+          # 2. Tell Crane where the actual Cargo.toml to build lives
+          cargoRoot = "./src-legato";
         };
     in
     {
