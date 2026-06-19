@@ -23,7 +23,7 @@ fn main() {
     let ports = PortBuilder::default().audio_out(config.channels).build();
     let (app, _) = LegatoBuilder::<Unconfigured>::new(config, ports).build_dsl(&graph);
 
-    let host = cpal::host_from_id(cpal::HostId::Alsa).unwrap();
+    let host = cpal::host_from_id(cpal::HostId::Jack).unwrap();
 
     AudioInterface::builder(&host, config)
         .build(app)
