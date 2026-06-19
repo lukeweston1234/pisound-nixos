@@ -57,6 +57,7 @@
     raspberrypi-eeprom
     alsa-utils
     jack2
+    libjack2
   ];
 
   security.rtkit.enable = true;

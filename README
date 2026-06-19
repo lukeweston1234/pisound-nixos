@@ -1,3 +1,5 @@
+Initial USB Flash
+
 ```sh 
 nix build .#nixosConfigurations.pi.config.system.build.sdImage
 
@@ -5,7 +7,7 @@ zstd -dc result/sd-image/nixos-image-sd-card-26.11.20260610.9ae611a-aarch64-linu
 sudo dd of=/dev/sdX bs=4M conv=fsync status=progress
 ```
 
-or
+Remote Deployment
 
 ```sh
 nixos-rebuild switch \

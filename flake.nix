@@ -27,7 +27,7 @@
           toolchain = mkToolchain pkgs;
           craneLib = (crane.mkLib pkgs).overrideToolchain toolchain;
           rtDeps = pkgs.lib.optionals pkgs.stdenv.isLinux
-            (with pkgs; [ alsa-lib jack2 udev ]);
+            (with pkgs; [ alsa-lib jack2 libjack2 udev ]);
         in
         craneLib.buildPackage {
           src = craneLib.cleanCargoSource ./src-legato;
