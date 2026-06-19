@@ -80,7 +80,8 @@
               {
               description = "Legato DSP (CPAL/ALSA)";
               wantedBy = [ "multi-user.target" ];
-              after = [ "sound.target" ];
+              after = [ "sound.target" "jack.service" ];
+              wants = [ "jack.service" ];
               environment = {
                 LEGATO_SAMPLE_RATE = "48000";
                 LEGATO_BLOCK_SIZE = "64";
