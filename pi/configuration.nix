@@ -34,8 +34,6 @@
 
   nix.settings.trusted-users = [ "luke" ];
 
-  security.sudo.wheelNeedsPassword = false;
-
   hardware = {
     raspberry-pi."4".apply-overlays-dtmerge.enable = true;
     deviceTree = {
@@ -59,6 +57,8 @@
     raspberrypi-eeprom
     alsa-utils
     jack2
+    jack-example-tools
+    libjack2
   ];
 
   security.rtkit.enable = true;
@@ -78,29 +78,33 @@
     options snd slots=snd-soc-pisound
   '';
 
-  # services.pipewire = {
-  #   enable = true;
-  #   alsa.enable = true;
-  #   alsa.support32Bit = true;
-  #   jack.enable = true;
-  # };
+  services.jack = {
+    jackd.enable = true;
+    jackd.extraOptions = [
+      "-R" "-P95"
+      "-d" "alsa"
+      "-d" "hw:pisound"
+      "-r" "48000"
+      "-p" "64"
+      "-n" "2"
+      "-X" "raw" # raw will provide a set of JACK MIDI ports that correspond to each raw ALSA device on the machine. 
+    ];
+    alsa.enable = false;
+    loopback.enable = false;
+  };
+
+  security.sudo.wheelNeedsPassword = false;
 
   users.users.luke = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "audio" ];
+    extraGroups = [ "wheel" "audio" "jackaudio" ];
     initialPassword = "password";
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDWvvcvKsuBIm9Cawq4Ay+W10KKd/NgCrOmpBZjnE/5D816Odyrtd/jGh7zhcjqaLOEy8WE+I/7Yx6aNovclSRaAEpNli5wq5DZFCIy9/zMn9D5Hbh0FDLtsu8ucopixJwlDDKAT50NMgfd3H8EEYx1NY3jTm3SyBHXhp6asPcLGAUTmaG789GSUKDyyDV1tq6nyDgIXhj9npJTBGJ6HvT5mHLJQg1NpflLibMtbapf4z+IYJINMWPX3KgLWsIS476QYodIdRKd0Ylc3fJPTanXlZjlDrMDKCaotyUekC2mFMDVbJVn7kJ5sAc/Bc+KyWfdy1NEpKpB+G2jCnCZEVz4vpuv1qT8Ke+WXeZPc2q2PNs5hyylNkbWQhvCvn5WfSyxSAUg78VqO/BrLJyCLSXLurVHdWJG+x1XdRPxZjTijVtSmhIp0PJ0g34a2BOIqfqCVlRHOKmCGMFIoD/Z+pPZeOzJx9YYBN/9+8RQGYaYPPnbkkpmjwNTju7UoUwZT3M= luke@nixos"
     ];
   };
 
-  # networking.networkmanager.enable = true;
-  # networking.useDHCP = lib.mkDefault true;
-
-  networking = {
-    useDHCP = true;
-    firewall.enable = false;
-  };
+  networking.useDHCP = lib.mkDefault true;
 
   time.timeZone = "Europe/Berlin";
 

@@ -1,9 +1,6 @@
 use cpal::HostId::{Alsa, Jack};
 use legato::{
-    builder::{LegatoBuilder, Unconfigured},
-    config::Config,
-    interface::AudioInterface,
-    ports::PortBuilder,
+    builder::{LegatoBuilder, Unconfigured}, config::Config, interface::AudioInterface, midi::{MidiPortKind, start_midi_thread}, ports::PortBuilder
 };
 
 fn env_or<T: std::str::FromStr>(key: &str, default: T) -> T {
@@ -21,10 +18,22 @@ fn main() {
         rt_capacity: env_or("LEGATO_RT_CAPACITY", 0),
     };
 
-    let ports = PortBuilder::default().audio_out(config.channels).build();
-    let (app, _) = LegatoBuilder::<Unconfigured>::new(config, ports).build_dsl(&graph);
+    let midi_rt_fe = start_midi_thread(
+        256,
+        "my_port",
+        MidiPortKind::Index(0),
+        MidiPortKind::Index(0),
+        "my_port",
+    )
+    .unwrap();
 
-    let host = cpal::host_from_id(Alsa).unwrap();
+    let ports = PortBuilder::default().audio_out(config.channels).build();
+    
+    let (app, _) = LegatoBuilder::<Unconfigured>::new(config, ports)
+        .set_midi_runtime(midi_rt_fe)
+        .build_dsl(&graph);
+
+    let host = cpal::host_from_id(cpal::HostId::Jack).unwrap();
 
     AudioInterface::builder(&host, config)
         .build(app)
