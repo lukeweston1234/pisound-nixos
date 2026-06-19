@@ -88,6 +88,8 @@
                 LEGATO_CHANNELS = "2";
                 LEGATO_GRAPH = "${graphFile}";
                 LD_LIBRARY_PATH = "${pkgs.libjack2}/lib";
+                JACK_DEFAULT_SERVER = "default";
+                JACK_PROMISCUOUS_SERVER = "jackaudio";
               };
               serviceConfig = {
                 User = "jackaudio";
