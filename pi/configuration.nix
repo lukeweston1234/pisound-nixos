@@ -71,6 +71,8 @@
 
   services.pipewire.enable = false;
 
+  powerManagement.cpuFreqGovernor = "performance";
+
   # https://nixos.wiki/wiki/ALSA
   boot.extraModprobeConfig = ''
     options snd slots=snd-soc-pisound
@@ -96,19 +98,9 @@
   # networking.useDHCP = lib.mkDefault true;
 
   networking = {
-    interfaces.end0 = {
-      ipv4.addresses = [{
-        address = "192.0.2.2";
-        prefixLength = 24;
-      }];
-    };
-    defaultGateway = {
-      address = "192.0.2.1";
-      interface = "ens3";
-    };
+    useDHCP = true;
+    firewall.eanble = false;
   };
-
-
 
   time.timeZone = "Europe/Berlin";
 

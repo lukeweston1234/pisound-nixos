@@ -27,12 +27,12 @@
           toolchain = mkToolchain pkgs;
           craneLib = (crane.mkLib pkgs).overrideToolchain toolchain;
           rtDeps = pkgs.lib.optionals pkgs.stdenv.isLinux
-            (with pkgs; [ alsa-lib jack2 udev ]);
+            (with pkgs; [ alsa-lib jack2 udev dbus ]);
         in
         craneLib.buildPackage {
           src = craneLib.cleanCargoSource ./src-legato;
           strictDeps = true;
-          nativeBuildInputs = with pkgs; [ pkg-config clang ];
+          nativeBuildInputs = with pkgs; [ pkg-config clang];
           buildInputs = rtDeps;
           RUSTFLAGS = pkgs.lib.optionalString pkgs.stdenv.isx86_64
             "-C target-cpu=x86-64-v3";
@@ -47,7 +47,9 @@
         let pkgs = mkPkgs system; in {
           default = pkgs.mkShell {
             inputsFrom = [ legato.devShells.${system}.default ];
-            packages = [
+            packages = with pkgs;[
+              dbus
+              pkg-config
               (pkgs.writeShellScriptBin "run-release" ''
                 exec cargo run --release --manifest-path ./src-legato/Cargo.toml "$@"
               '')
@@ -83,7 +85,7 @@
               after = [ "sound.target" ];
               environment = {
                 LEGATO_SAMPLE_RATE = "48000";
-                LEGATO_BLOCK_SIZE = "256";
+                LEGATO_BLOCK_SIZE = "64";
                 LEGATO_CHANNELS = "2";
                 LEGATO_GRAPH = "${graphFile}";
               };

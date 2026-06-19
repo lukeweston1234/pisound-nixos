@@ -1,0 +1,8 @@
+audio {
+    sine { freq: 440.0 }, 
+    mono_fan_out { chans: 2 }
+}
+
+sine >> mono_fan_out
+
+{ mono_fan_out }

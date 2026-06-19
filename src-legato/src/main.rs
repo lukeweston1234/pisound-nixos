@@ -1,3 +1,4 @@
+use cpal::HostId::{Alsa, Jack};
 use legato::{
     builder::{LegatoBuilder, Unconfigured},
     config::Config,
@@ -15,7 +16,7 @@ fn main() {
 
     let config = Config {
         sample_rate: env_or("LEGATO_SAMPLE_RATE", 48_000),
-        block_size: env_or("LEGATO_BLOCK_SIZE", 256),
+        block_size: env_or("LEGATO_BLOCK_SIZE", 64),
         channels: env_or("LEGATO_CHANNELS", 2),
         rt_capacity: env_or("LEGATO_RT_CAPACITY", 0),
     };
@@ -23,7 +24,7 @@ fn main() {
     let ports = PortBuilder::default().audio_out(config.channels).build();
     let (app, _) = LegatoBuilder::<Unconfigured>::new(config, ports).build_dsl(&graph);
 
-    let host = cpal::host_from_id(cpal::HostId::Alsa).unwrap();
+    let host = cpal::host_from_id(Alsa).unwrap();
 
     AudioInterface::builder(&host, config)
         .build(app)
