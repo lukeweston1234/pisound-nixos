@@ -84,6 +84,7 @@
       "-r" "48000"
       "-p" "64"
       "-n" "2"
+      "-X" "raw" # raw will provide a set of JACK MIDI ports that correspond to each raw ALSA device on the machine. 
     ];
     alsa.enable = false;
     loopback.enable = false;
