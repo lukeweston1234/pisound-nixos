@@ -71,8 +71,6 @@
 
   services.pipewire.enable = false;
 
-  powerManagement.cpuFreqGovernor = "performance";
-
   # https://nixos.wiki/wiki/ALSA
   boot.extraModprobeConfig = ''
     options snd slots=snd-soc-pisound

@@ -30,15 +30,12 @@
             (with pkgs; [ alsa-lib jack2 libjack2 udev ]);
         in
         craneLib.buildPackage {
-          src = craneLib.cleanCargoSource ./.;
-
+          src = craneLib.cleanCargoSource ./src-legato;
           strictDeps = true;
           nativeBuildInputs = with pkgs; [ pkg-config clang ];
           buildInputs = rtDeps;
-          RUSTFLAGS = pkgs.lib.optionalString pkgs.stdenv.isx86_64 "-C target-cpu=x86-64-v3";
-
-          # 2. Tell Crane where the actual Cargo.toml to build lives
-          cargoRoot = "./src-legato";
+          RUSTFLAGS = pkgs.lib.optionalString pkgs.stdenv.isx86_64
+            "-C target-cpu=x86-64-v3";
         };
     in
     {
@@ -50,9 +47,7 @@
         let pkgs = mkPkgs system; in {
           default = pkgs.mkShell {
             inputsFrom = [ legato.devShells.${system}.default ];
-            packages = with pkgs;[
-              dbus
-              pkg-config
+            packages = [
               (pkgs.writeShellScriptBin "run-release" ''
                 exec cargo run --release --manifest-path ./src-legato/Cargo.toml "$@"
               '')
