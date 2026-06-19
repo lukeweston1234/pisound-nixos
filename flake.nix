@@ -87,9 +87,11 @@
                 LEGATO_BLOCK_SIZE = "64";
                 LEGATO_CHANNELS = "2";
                 LEGATO_GRAPH = "${graphFile}";
+                LD_LIBRARY_PATH = "${pkgs.libjack2}/lib";
               };
               serviceConfig = {
-                User = "luke";
+                User = "jackaudio";
+                Group = "jackaudio";
                 ExecStart = "${pkgs.legato-app}/bin/legato-template";
                 LimitRTPRIO = 99;
                 LimitMEMLOCK = "infinity";
