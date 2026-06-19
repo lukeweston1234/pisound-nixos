@@ -57,6 +57,7 @@
     raspberrypi-eeprom
     alsa-utils
     jack2
+    jack-example-tools
     libjack2
   ];
 
