@@ -99,7 +99,7 @@
 
   networking = {
     useDHCP = true;
-    firewall.eanble = false;
+    firewall.enable = false;
   };
 
   time.timeZone = "Europe/Berlin";
