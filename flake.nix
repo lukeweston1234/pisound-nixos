@@ -248,6 +248,7 @@
                 ExecStart = "${pkgs.legato-app}/bin/legato-template";
                 LimitRTPRIO = 99;
                 LimitMEMLOCK = "infinity";
+                ExecStartPost = "${pkgs.jack-example-tools}/bin/jack_connect system:midi_capture_1 'a2j:my_port [128] (playback): my_port'"; # Required to wire midi input into jack
                 Restart = "on-failure";
                 RestartSec = 2;
               };
