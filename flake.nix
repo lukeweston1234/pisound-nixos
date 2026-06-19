@@ -118,9 +118,9 @@
                         sine: lfo5 { freq: 0.07 },
                         sine: lfo6 { freq: 0.23 },
 
-                        track_mixer: feedback    { tracks: 4, chans_per_track: 2, gain: [0.5, 0.5, 0.5, 0.5] },
+                        track_mixer: feedback    { tracks: 4, chans_per_track: 2, gain: [0.3, 0.3, 0.3, 0.3] },
                         track_mixer: hm_mix_down { tracks: 4, chans_per_track: 2, gain: [0.5, 0.5, 0.5, 0.5] },
-                        track_mixer: wet_dry     { tracks: 2, chans_per_track: 2, gain: [0.5, 0.8] },
+                        track_mixer: wet_dry     { tracks: 2, chans_per_track: 2, gain: [0.5, 0.5] },
                     }
 
                     control {
@@ -203,7 +203,7 @@
                 audio {
                     sine: pan_lfo { freq: 0.3 },
                     pan,
-                    svf { chans: 2, cutoff: 5400.0, q: 0.4, type: "lowpass" },
+                    svf { chans: 2, cutoff: 3200.0, q: 0.4, type: "lowpass" },
                     track_mixer: osc_mixer { tracks: 5, chans_per_track: 1, gain: [0.1, 0.1, 0.1, 0.1, 0.1] },
                 }
 
