@@ -515,9 +515,9 @@ checksum = "bbd2bcb4c963f2ddae06a2efc7e9f3591312473c50c6685e1f298068316e66fe"
 
 [[package]]
 name = "legato"
-version = "0.0.33"
+version = "0.0.34"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "175d0e9dc4600a4c0e321024f8ed06241b94a139939f87c1a4e54a899263d028"
+checksum = "2bd3735499e05cf2c1778698b4064d4960fe5dbe9477289e9138f055c61f7e97"
 dependencies = [
  "approx",
  "arc-swap",
@@ -543,6 +543,7 @@ version = "0.1.0"
 dependencies = [
  "cpal",
  "legato",
+ "midir",
  "rtrb",
 ]
 
@@ -601,6 +602,7 @@ dependencies = [
  "alsa",
  "bitflags 1.3.2",
  "coremidi",
+ "jack-sys",
  "js-sys",
  "libc",
  "parking_lot",

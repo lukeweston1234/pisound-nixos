@@ -20,11 +20,11 @@ fn main() {
 
     let midi_rt_fe = start_midi_thread(
         256,
-        "legato",
+        "legato_in",
         // Contains, not an exact match
         MidiPortKind::Named("pisound"),
         MidiPortKind::Named("pisound"),
-        "legato_din",
+        "legato_out",
     ).unwrap();
 
     let ports = PortBuilder::default().audio_out(config.channels).build();
