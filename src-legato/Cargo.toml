@@ -6,5 +6,5 @@ edition = "2024"
 
 [dependencies]
 cpal = { version = "0.16.0", features = [ "jack" ] }
-legato = "0.0.32"
+legato = "0.0.33"
 rtrb = "0.3.3"
