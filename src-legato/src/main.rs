@@ -6,6 +6,7 @@ fn env_or<T: std::str::FromStr>(key: &str, default: T) -> T {
     std::env::var(key).ok().and_then(|v| v.parse().ok()).unwrap_or(default)
 }
 
+
 fn main() {
     let graph_path = std::env::var("LEGATO_GRAPH").unwrap_or_else(|_| ".legato".into());
     let graph = std::fs::read_to_string(&graph_path).unwrap();
