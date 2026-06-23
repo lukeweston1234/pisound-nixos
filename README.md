@@ -1,8 +1,8 @@
 WARNING:
 
-** This is a personal WIP repository, will add my SSH public key, etc. Just for reference for now until I make a nicer solution for downstream users**
+**This is a personal WIP repository, will add my SSH public key, etc. Just for reference for now until I make a nicer solution for downstream users**
 
-** Use or take inspiration at your own risk! **
+**Use or take inspiration at your own risk!**
 
 Initial USB Flash
 
