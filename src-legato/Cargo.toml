@@ -7,5 +7,5 @@ edition = "2024"
 [dependencies]
 cpal = { version = "0.16.0", features = [ "jack" ] }
 midir = { version = "0.10.3", features = ["jack"] }
-legato = "0.0.34"
+legato = "0.0.36"
 rtrb = "0.3.3"
